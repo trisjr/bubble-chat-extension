@@ -2,6 +2,29 @@
  * Background service worker
  */
 
+/**
+ * Check if URL is a valid Messenger URL
+ * @param {string} url - URL to check
+ * @returns {boolean} True if URL is a Messenger page
+ */
+function isMessengerUrl(url) {
+  try {
+    const urlObj = new URL(url);
+    const hostname = urlObj.hostname;
+    const pathname = urlObj.pathname;
+
+    // Check for exact messenger.com domain or facebook.com with messages path
+    return (
+      hostname === 'www.messenger.com' ||
+      hostname === 'messenger.com' ||
+      (hostname === 'www.facebook.com' && pathname.startsWith('/messages')) ||
+      (hostname === 'facebook.com' && pathname.startsWith('/messages'))
+    );
+  } catch {
+    return false;
+  }
+}
+
 // Initialize default settings on install
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('Bubble Chat Enhancer: Extension installed');
@@ -67,11 +90,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
       // Notify content scripts about settings change
       chrome.tabs.query({}, (tabs) => {
         tabs.forEach((tab) => {
-          if (
-            tab.url &&
-            (tab.url.includes('messenger.com') ||
-              tab.url.includes('facebook.com/messages'))
-          ) {
+          if (tab.url && isMessengerUrl(tab.url)) {
             chrome.tabs.sendMessage(tab.id, {
               action: 'settingsUpdated',
               settings: changes.bubble_settings.newValue

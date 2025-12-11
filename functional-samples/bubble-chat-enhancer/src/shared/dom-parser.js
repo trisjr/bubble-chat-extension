@@ -2,6 +2,9 @@
  * DOM parser utilities for extracting Messenger data
  */
 
+// Configuration constants
+const MESSAGE_SEND_DELAY_MS = 100; // Delay before triggering send action
+
 /**
  * Get current thread ID from URL
  * @returns {string|null} Thread ID or null
@@ -206,7 +209,7 @@ export function sendMessage(text) {
         cancelable: true
       });
       input.dispatchEvent(enterEvent);
-    }, 100);
+    }, MESSAGE_SEND_DELAY_MS);
 
     return true;
   } catch (error) {

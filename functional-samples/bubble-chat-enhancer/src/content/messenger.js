@@ -5,6 +5,10 @@
 // Import utilities (inline for content script)
 // Note: In production, these would be bundled together
 
+// Configuration constants
+const DEBOUNCE_DELAY_MS = 500; // Delay for debouncing message updates
+const MESSAGE_SEND_DELAY_MS = 100; // Delay before triggering send action
+
 let bubbleUI = null;
 let messageObserver = null;
 let settings = {};
@@ -256,7 +260,7 @@ function setupMessageObserver() {
         bubbleUI.unreadCount++;
         updateBadge();
       }
-    }, 500)();
+    }, DEBOUNCE_DELAY_MS)();
   });
 
   // Start observing
@@ -483,7 +487,7 @@ function sendMessageToMessenger(text) {
         bubbles: true
       });
       input.dispatchEvent(enterEvent);
-    }, 100);
+    }, MESSAGE_SEND_DELAY_MS);
   } catch (error) {
     console.error('Error sending message:', error);
   }
