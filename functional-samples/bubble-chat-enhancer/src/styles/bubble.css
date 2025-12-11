@@ -1,0 +1,347 @@
+/* Bubble Chat Enhancer Styles */
+
+/* Container */
+#bubble-chat-enhancer {
+  position: fixed;
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+}
+
+#bubble-chat-enhancer.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+#bubble-chat-enhancer.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Theme - Light */
+#bubble-chat-enhancer.light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f2f5;
+  --text-primary: #050505;
+  --text-secondary: #65676b;
+  --border-color: #e4e6eb;
+  --accent-color: #0084ff;
+  --hover-bg: #f0f2f5;
+  --message-incoming: #e4e6eb;
+  --message-outgoing: #0084ff;
+  --message-text-incoming: #050505;
+  --message-text-outgoing: #ffffff;
+}
+
+/* Theme - Dark */
+#bubble-chat-enhancer.dark {
+  --bg-primary: #242526;
+  --bg-secondary: #3a3b3c;
+  --text-primary: #e4e6eb;
+  --text-secondary: #b0b3b8;
+  --border-color: #3a3b3c;
+  --accent-color: #0084ff;
+  --hover-bg: #3a3b3c;
+  --message-incoming: #3a3b3c;
+  --message-outgoing: #0084ff;
+  --message-text-incoming: #e4e6eb;
+  --message-text-outgoing: #ffffff;
+}
+
+/* Bubble */
+.bubble {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-primary);
+  border-radius: 24px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  max-width: 300px;
+  position: relative;
+}
+
+.bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.bubble-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bubble-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.bubble-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bubble-message {
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bubble-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ff3b30;
+  color: white;
+  border-radius: 12px;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 6px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Popup */
+.bubble-popup {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  width: 360px;
+  height: 500px;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: popupFadeIn 0.3s ease;
+}
+
+#bubble-chat-enhancer.bottom-right .bubble-popup {
+  bottom: 80px;
+  right: 0;
+}
+
+#bubble-chat-enhancer.bottom-left .bubble-popup {
+  bottom: 80px;
+  left: 0;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Popup Header */
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.popup-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.popup-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-primary);
+}
+
+.popup-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.popup-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.popup-controls button {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  transition: background 0.2s;
+}
+
+.popup-controls button:hover {
+  background: var(--hover-bg);
+}
+
+/* Popup Messages */
+.popup-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-primary);
+}
+
+.popup-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.popup-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.popup-messages::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.messages-loading,
+.no-messages {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 20px;
+  font-size: 14px;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.message.outgoing {
+  justify-content: flex-end;
+}
+
+.message.incoming {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 70%;
+  border-radius: 18px;
+  padding: 8px 12px;
+  word-wrap: break-word;
+}
+
+.message.incoming .message-bubble {
+  background: var(--message-incoming);
+  color: var(--message-text-incoming);
+}
+
+.message.outgoing .message-bubble {
+  background: var(--message-outgoing);
+  color: var(--message-text-outgoing);
+}
+
+.message-text {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Popup Input */
+.popup-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.message-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.message-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.send-button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.send-button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.send-button:active {
+  transform: scale(0.95);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bubble-popup {
+    width: 320px;
+    height: 450px;
+  }
+
+  .bubble {
+    max-width: 250px;
+  }
+}
