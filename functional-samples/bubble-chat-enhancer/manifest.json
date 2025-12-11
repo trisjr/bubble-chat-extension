@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Bubble Chat Enhancer for Messenger",
+  "version": "1.0.0",
+  "description": "Floating bubble chat overlay for Messenger Web with quick replies and pinned conversations",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://www.messenger.com/*",
+    "https://www.facebook.com/messages/*"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.messenger.com/*",
+        "https://www.facebook.com/messages/*"
+      ],
+      "js": ["src/content/messenger.js"],
+      "css": ["src/styles/bubble.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "src/ui/popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+}
